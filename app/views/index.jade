@@ -1,0 +1,32 @@
+doctype html
+html(ng-app='myList')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    title Hello Angular!
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js')
+    script(src='list.js')
+    // <link rel="stylesheet" href="list.css">
+  body.container(style='margin-top:10px')
+    .container(ng-controller='ListController as list', ng-init='list.getData()')
+      .row
+        .jumbotron
+          h1 MEAN Stack
+          form.form-inline(ng-submit='list.addData()')
+            input.form-control(type='text', ng-model='list.key', placeholder='add new key', required='')
+            input.form-control(type='text', ng-model='list.value', placeholder='add new value')
+            input.btn.btn-primary(type='submit', value='submit')
+        table.table.table-striped
+          thead
+            tr
+              th key
+              th value
+              th
+                | delete
+          tbody
+            tr(ng-repeat='data in list.data')
+              td {{data.key}}
+              td {{data.value}}
+              td
+                a(ng-click='list.delete(data.key)', href='#') delete
