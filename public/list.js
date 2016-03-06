@@ -27,11 +27,12 @@ angular.module('myList',[])
             data: _data
           }).then(function successCallback(response) {
               console.log(response);
-
+              
               var _index=-1;
               list.data.forEach(function(item,index,array){
                 if(item.key === list.key){
                   item.value = list.value;
+                  _index = 0;
                 }
               });
               
@@ -54,17 +55,16 @@ angular.module('myList',[])
         method: 'GET',
         url: "http://api-nivesh2.c9users.io/api/v1/delete?key="+key
       }).then(function successCallback(response){
-          
-          var _index=0;
-          list.data.forEach(function(item,index,array){
-            if(item.key === key){
-               _index=index;
-            }
-          });
-          list.data.splice(_index,1);
+        console.log(response);
       }, function errorCallback(response){
         console.log(response);
       });
+      
+      setTimeout(()=>{
+        list.data =  list.data.filter((item)=>{
+            return item.key !== key;
+          });
+      },0);
     };
 
   });
