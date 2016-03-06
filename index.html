@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="myList">
+  <!--
+  Hello!, nice to see you are curious about the code.
+  -->
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Hello MEAN!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="list.js"></script>
+  </head>
+  
+  <body class="container">
+
+    <div ng-controller="ListController as list" ng-init="list.getData()" class="container">
+
+      <div class="row">
+        <div class="jumbotron">
+          <h1>MEAN Stack</h1>
+          <form ng-submit="list.addData()" class="form-inline">
+              <input type="text" ng-model="list.key" class="form-control" placeholder="add new key" required/>
+              <input type="text" ng-model="list.value" class="form-control" placeholder="add new value"/>
+              <input type="submit" value="submit" class="btn btn-primary">
+          </form>
+      </div>
+      
+      <table class="table table-striped">
+      
+        <thead>
+          <tr>
+            <th>key</th>
+            <th>value</th>
+            <th>delete</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr ng-repeat="data in list.data">
+            <td>{{data.key}}</td>
+            <td>{{data.value}}</td>
+            <td><a ng-click="list.delete(data.key)" href="#" >delete</a></td>
+          </tr>
+        </tbody>
+        
+      </table>
+      
+    </div>
+</div>
+  </body>
+</html>
