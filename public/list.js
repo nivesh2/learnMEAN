@@ -12,7 +12,6 @@ angular.module('myList',[])
           list.data = response.data.data;
         }, function errorCallback(response){
           console.log(response);
-          list.value = 'Error';
         });
     };
 
@@ -29,15 +28,22 @@ angular.module('myList',[])
           }).then(function successCallback(response) {
               console.log(response);
 
-              //asynchronously refreshes the data from the API server
-              list.getData();
+              var _index=-1;
+              list.data.forEach(function(item,index,array){
+                if(item.key === list.key){
+                  item.value = list.value;
+                }
+              });
+              
+              if(_index===-1){
+                list.data.push({'key':list.key,'value':list.value});
+              }
               
               list.key='';
               list.value='';
 
             }, function errorCallback(response) {
               console.log(response);
-              list.value = 'Error';
             });
         }
     };
@@ -46,9 +52,16 @@ angular.module('myList',[])
       console.log('deleting '+key);
       $http({
         method: 'GET',
-        url: `http://api-nivesh2.c9users.io/api/v1/delete?key=${key}`
+        url: "http://api-nivesh2.c9users.io/api/v1/delete?key="+key
       }).then(function successCallback(response){
-          list.getData();
+          
+          var _index=0;
+          list.data.forEach(function(item,index,array){
+            if(item.key === key){
+               _index=index;
+            }
+          });
+          list.data.splice(_index,1);
       }, function errorCallback(response){
         console.log(response);
       });
